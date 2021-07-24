@@ -4,7 +4,7 @@
  * Description:       Example block written with ESNext standard and JSX support – build step required.
  * Requires at least: 5.7
  * Requires PHP:      7.0
- * Version:           0.1.2
+ * Version:           0.2.0
  * Author:            The WordPress Contributors
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -42,6 +42,12 @@ function add_theme_scripts_and_styles() {// vendor deps
 			OWL_CAROUSEL_VERSION
 	);
 	wp_enqueue_style(
+			'animation.css',
+			'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
+			array(),
+			"4.1.1"
+	);
+	wp_enqueue_style(
 			'own-carousel-theme',
 			plugin_dir_url( __FILE__ ) . '/owlcarousel/assets/owl.theme.default.min.css',
 			array(),
@@ -53,20 +59,39 @@ function init_own_carousel() {
 	?>
 	<script>
 		jQuery(document).ready(function () {
-			jQuery(".pcabreus-owl-carousel > .wp-block-group > .wp-block-group__inner-container")
-					.addClass('owl-carousel')
-					.owlCarousel({
-						center: true,
-						autoplay: true,
-						items: 2,
-						loop: true,
-						margin: 10,
+			jQuery(".wp-block-pcabreus-owl-carousel").each((_, elem) => {
+				const carousel = jQuery(elem)
+
+				let options = {
+					center: true,
+					autoplay: true,
+					items: carousel.data("items"),
+					loop: true,
+					margin: 10,
+					responsive: {
+						600: {
+							items: carousel.data("responsive_items")
+						}
+					},
+				}
+
+				if (carousel.data("animate_out") === "fadeOut") {
+					options = {
+						...options,
+						animateOut: 'fadeOut',
+						items: 1,
 						responsive: {
 							600: {
-								items: 3
+								items: 1
 							}
-						}
-					});
+						},
+					}
+				}
+
+				carousel.find(" > .wp-block-group > .wp-block-group__inner-container")
+						.addClass('owl-carousel')
+						.owlCarousel(options);
+			})
 		})
 	</script><?php
 }
