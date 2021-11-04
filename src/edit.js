@@ -5,7 +5,7 @@ import {TextControl, SelectControl} from '@wordpress/components';
 export default function Edit(props) {
 	const blockProps = useBlockProps()
 
-	const {animateOut, items, responsiveItems} = props.attributes
+	const {animateOut, items, responsiveItems, center} = props.attributes
 
 	return (
 		<div {...blockProps}>
@@ -36,6 +36,22 @@ export default function Edit(props) {
 					value={animateOut}
 					label={'Animate out'}
 					onChange={(animateOut) => props.setAttributes({animateOut})
+					}
+				/>
+				<SelectControl
+					options={[
+						{
+							id: 0,
+							label: "Yes",
+							value: true
+						}, {
+							id: 1,
+							label: "No",
+							value: false
+						}]}
+					value={center}
+					label={'Center'}
+					onChange={(center) => props.setAttributes({center})
 					}
 				/>
 			</InspectorControls>

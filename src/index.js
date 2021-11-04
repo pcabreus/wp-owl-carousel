@@ -22,6 +22,12 @@ registerBlockType('pcabreus/owl-carousel', {
 			attribute: "data-responsive_items",
 			type: 'string',
 			default: 2
+		},
+		center: {
+			selector: "",
+			attribute: "data-center",
+			type: 'string',
+			default: true
 		}
 	},
 	/**
